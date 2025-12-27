@@ -32,7 +32,7 @@ class User extends Authenticatable
     {
         do {
             $username = 'user_'.Str::lower(Str::random(10));
-        } while (static::where('username', $username)->exists());
+        } while (static::whereUsername($username)->exists());
 
         return $username;
     }

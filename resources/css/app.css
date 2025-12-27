@@ -1,17 +1,11 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/inter';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   --font-inter: 'Inter Variable', sans-serif;
-}
-
-@layer base {
-  body {
-    @apply w-full overflow-x-hidden;
-  }
 }
 
 @source '../views';
@@ -132,6 +126,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply w-full overflow-x-hidden bg-gray-100 dark:bg-black;
   }
 }

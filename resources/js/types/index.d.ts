@@ -8,6 +8,13 @@ export type UsersTable = {
   updated_at: string | null;
 };
 
-export type CurrentUser = {
-  currentUser: Pick<UsersTable, 'id' | 'name' | 'username' | 'email' | 'email_verified_at' | 'created_at' | 'updated_at'> | null;
+export type SharedInertiaCurrentUserProp = {
+  current_user: { data: Pick<UsersTable, 'id' | 'name' | 'username' | 'email' | 'email_verified_at' | 'created_at' | 'updated_at'> } | null;
+};
+
+export type FlashMessage = {
+  flash_message: {
+    type: 'error' | 'success';
+    text: string;
+  };
 };
