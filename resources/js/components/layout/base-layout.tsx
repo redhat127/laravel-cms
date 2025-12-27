@@ -23,9 +23,10 @@ export const BaseLayout = ({ children }: { children: ReactNode }) => {
   }, [flashMessage]);
   const { component } = usePage();
   const isAuthPage = component.startsWith('auth/');
+  const isErrorPage = component === 'error';
   return (
     <ToggleThemeProvider>
-      {!isAuthPage && (
+      {!isAuthPage && !isErrorPage && (
         <header className="fixed inset-x-0 top-0 z-50 flex items-center justify-between border-b bg-white p-4 px-8 dark:bg-black">
           <Link href={home()} className="flex items-center gap-2 text-xl font-bold text-black sm:text-2xl dark:text-white">
             <FileText className="size-5 text-orange-600 sm:size-auto dark:text-orange-400" />
@@ -45,8 +46,8 @@ export const BaseLayout = ({ children }: { children: ReactNode }) => {
       )}
       <main
         className={cn('p-4 px-8', {
-          'flex min-h-screen items-center justify-center': isAuthPage,
-          'mt-18': !isAuthPage,
+          'flex min-h-screen items-center justify-center': isAuthPage || isErrorPage,
+          'mt-18': !isAuthPage && !isErrorPage,
         })}
       >
         {children}
