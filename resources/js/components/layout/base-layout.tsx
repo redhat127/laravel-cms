@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { ToggleTheme, ToggleThemeProvider } from '../theme-provider';
 import { Button } from '../ui/button';
 import { Toaster } from '../ui/sonner';
+import { UserDropdown } from '../user-dropdown';
 
 export const BaseLayout = ({ children }: { children: ReactNode }) => {
   const currentUser = useCurrentUser();
@@ -31,7 +32,9 @@ export const BaseLayout = ({ children }: { children: ReactNode }) => {
             {clientEnv.VITE_APP_NAME}
           </Link>
           <div className="flex items-center gap-2">
-            {currentUser ? null : (
+            {currentUser ? (
+              <UserDropdown />
+            ) : (
               <Button asChild>
                 <Link href={auth.login.get()}>Login</Link>
               </Button>
