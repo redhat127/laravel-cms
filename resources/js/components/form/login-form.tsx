@@ -1,5 +1,5 @@
 import LoginController from '@/actions/App/Http/Controllers/Auth/LoginController';
-import { showServerValidationErrors } from '@/lib/utils';
+import { showServerValidationError } from '@/lib/utils';
 import { emailRule, passwordRule, remember_meRule } from '@/zod/inputs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
@@ -44,7 +44,7 @@ export const LoginForm = () => {
             setIsPending(false);
           },
           onError(error) {
-            showServerValidationErrors(error);
+            showServerValidationError(error);
           },
         });
       })}

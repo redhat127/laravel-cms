@@ -46,6 +46,7 @@ export const BaseLayout = ({ children }: { children: ReactNode }) => {
       <main
         className={cn('p-4 px-8', {
           'flex min-h-screen items-center justify-center': isAuthPage,
+          'mt-18': !isAuthPage,
         })}
       >
         {children}

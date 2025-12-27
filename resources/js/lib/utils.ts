@@ -11,7 +11,7 @@ export const pageTitle = (title: string) => {
   return `${clientEnv.VITE_APP_NAME} - ${title}`;
 };
 
-export const showServerValidationErrors = (errors: Record<string, string>) => {
+export const showServerValidationError = (errors: Record<string, string>) => {
   const values = Object.values(errors);
   if (values.length > 0) {
     const message = values[0];

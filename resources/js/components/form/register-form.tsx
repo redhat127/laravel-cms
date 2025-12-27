@@ -1,5 +1,5 @@
 import RegisterController from '@/actions/App/Http/Controllers/RegisterController';
-import { showServerValidationErrors } from '@/lib/utils';
+import { showServerValidationError } from '@/lib/utils';
 import { emailRule, nameRule, passwordRule } from '@/zod/inputs';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from '@inertiajs/react';
@@ -43,7 +43,7 @@ export const RegisterForm = () => {
             setIsPending(false);
           },
           onError(error) {
-            showServerValidationErrors(error);
+            showServerValidationError(error);
           },
         });
       })}

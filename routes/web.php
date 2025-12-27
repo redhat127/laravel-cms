@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
@@ -43,5 +44,14 @@ Route::middleware('auth')
                     ->group(function () {
                         Route::post('/', 'post')->name('post');
                     });
+            });
+
+        Route::prefix('account')
+            ->name('account.')
+            ->controller(AccountController::class)
+            ->group(function () {
+                Route::get('/', 'get')->name('get');
+                Route::patch('/profile-details', 'profileDetails')
+                    ->name('profileDetails');
             });
     });
