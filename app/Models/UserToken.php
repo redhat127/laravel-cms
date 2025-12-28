@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 enum UserTokenType: string
 {
     case EMAIL_VERIFICATION = 'email-verification';
+    case CHANGE_USERNAME = 'change-username';
 }
 
 class UserToken extends Model
@@ -27,11 +28,16 @@ class UserToken extends Model
             'token' => 'hashed',
             'type' => UserTokenType::class,
             'expires_at' => 'datetime',
+            'payload' => 'array',
         ];
     }
 
-    public static function createToken(User $user, UserTokenType $type, int $expires_in_minutes): array
-    {
+    public static function createToken(
+        User $user,
+        UserTokenType $type,
+        int $expires_in_minutes,
+        ?array $payload = null
+    ): array {
         $token = Str::random(64);
 
         self::updateOrCreate(
@@ -42,6 +48,7 @@ class UserToken extends Model
             [
                 'token' => $token,
                 'expires_at' => now()->addMinutes($expires_in_minutes),
+                'payload' => $payload,
             ]
         );
 

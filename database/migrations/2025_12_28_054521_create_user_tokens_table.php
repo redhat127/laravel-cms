@@ -24,6 +24,7 @@ return new class extends Migration
                 'user_id',
             ]);
             $table->timestamps();
+            $table->json('payload')->nullable();
         });
     }
 
