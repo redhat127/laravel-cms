@@ -41,8 +41,6 @@ class EmailVerificationController extends Controller
             ->first();
 
         if (! $userToken || ! $userToken->isValid($token)) {
-            $userToken?->delete();
-
             return redirect()->route('auth.login.get')
                 ->with('flash_message', [
                     'type' => 'error',
