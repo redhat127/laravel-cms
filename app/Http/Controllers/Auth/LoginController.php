@@ -37,12 +37,11 @@ class LoginController extends Controller
 
             request()->session()->regenerate();
 
-            inertia()->flash('flash_message', [
-                'type' => 'success',
-                'text' => 'You are logged in.',
-            ]);
-
-            return redirect()->intended();
+            return redirect()->intended()
+                ->with('flash_message', [
+                    'type' => 'success',
+                    'text' => 'You are logged in.',
+                ]);
         }
 
         throw ValidationException::withMessages([

@@ -30,11 +30,9 @@ class AccountController extends Controller
                 : $user->username_changed_at,
         ]);
 
-        inertia()->flash('flash_message', [
+        return back()->with('flash_message', [
             'type' => 'success',
             'text' => 'Your profile details have been updated.',
         ]);
-
-        return back();
     }
 }

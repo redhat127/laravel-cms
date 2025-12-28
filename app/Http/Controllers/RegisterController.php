@@ -40,11 +40,10 @@ class RegisterController extends Controller
             expires_in_minutes: $expires_in_minutes
         ));
 
-        inertia()->flash('flash_message', [
-            'type' => 'success',
-            'text' => 'You are registered. check your email to verify your account.',
-        ]);
-
-        return redirect()->route('auth.login.get');
+        return redirect()->route('auth.login.get')
+            ->with('flash_message', [
+                'type' => 'success',
+                'text' => 'You are registered. check your email to verify your account.',
+            ]);
     }
 }

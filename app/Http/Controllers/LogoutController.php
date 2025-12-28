@@ -13,11 +13,9 @@ class LogoutController extends Controller
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        inertia()->flash('flash_message', [
+        return redirect()->route('home')->with('flash_message', [
             'type' => 'success',
             'text' => 'You are logged out.',
         ]);
-
-        return redirect()->route('home');
     }
 }
