@@ -120,7 +120,7 @@ class AccountController extends Controller
         return redirect()->route('account.get')
             ->with('flash_message', [
                 'type' => 'success',
-                'text' => 'Your username has changed.',
+                'text' => 'Your username has been changed.',
             ]);
     }
 
