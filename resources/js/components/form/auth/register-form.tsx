@@ -6,9 +6,9 @@ import { router } from '@inertiajs/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
-import { SubmitBtn } from '../submit-btn';
-import { TextInput } from '../text-input';
-import { FieldGroup } from '../ui/field';
+import { SubmitBtn } from '../../submit-btn';
+import { TextInput } from '../../text-input';
+import { FieldGroup } from '../../ui/field';
 
 const registerSchema = z.object({
   name: nameRule,

@@ -3,7 +3,7 @@ import account from '@/routes/account';
 import { Link } from '@inertiajs/react';
 import { User } from 'lucide-react';
 import { useState } from 'react';
-import { LogoutForm } from './form/logout-form';
+import { LogoutForm } from './form/auth/logout-form';
 import {
   DropdownMenu,
   DropdownMenuContent,

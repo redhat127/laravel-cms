@@ -1,4 +1,4 @@
-import { LoginForm } from '@/components/form/login-form';
+import { LoginForm } from '@/components/form/auth/login-form';
 import { AuthLayout } from '@/components/layout/auth-layout';
 import { BaseLayout } from '@/components/layout/base-layout';
 import { Button } from '@/components/ui/button';
@@ -25,9 +25,10 @@ export default function Login() {
         </CardHeader>
         <CardContent className="space-y-2">
           <LoginForm />
-          <Button asChild variant="link" className="px-0 underline underline-offset-4">
+          <div className="my-4 flex flex-col gap-1.5 text-sm font-medium text-primary underline underline-offset-4">
+            <Link href={auth.resendEmailVerification.get()}>Resend email verification</Link>
             <Link href={auth.register.get()}>Create an account</Link>
-          </Button>
+          </div>
           <Button asChild variant="outline" className="w-full">
             <Link href={home()}>
               <ArrowRight />

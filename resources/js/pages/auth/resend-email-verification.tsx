@@ -1,4 +1,4 @@
-import { RegisterForm } from '@/components/form/auth/register-form';
+import { ResendEmailVerificationForm } from '@/components/form/auth/resend-email-verification-form';
 import { AuthLayout } from '@/components/layout/auth-layout';
 import { BaseLayout } from '@/components/layout/base-layout';
 import { Button } from '@/components/ui/button';
@@ -10,21 +10,21 @@ import { Head, Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { type ReactNode } from 'react';
 
-export default function Register() {
+export default function ResendEmailVerification() {
   return (
     <>
       <Head>
-        <title>{pageTitle('Register')}</title>
+        <title>{pageTitle('Resend Email Verification')}</title>
       </Head>
       <Card>
         <CardHeader>
           <CardTitle>
-            <h1 className="font-bold">Register</h1>
+            <h1 className="font-bold">Resend Email Verification</h1>
           </CardTitle>
-          <CardDescription>Fill inputs below to create an account</CardDescription>
+          <CardDescription>Enter your email to resend the verification link</CardDescription>
         </CardHeader>
         <CardContent className="space-y-2">
-          <RegisterForm />
+          <ResendEmailVerificationForm />
           <Button asChild variant="link" className="px-0 underline underline-offset-4">
             <Link href={auth.login.get()}>Back to login</Link>
           </Button>
@@ -40,7 +40,7 @@ export default function Register() {
   );
 }
 
-Register.layout = (page: ReactNode) => (
+ResendEmailVerification.layout = (page: ReactNode) => (
   <BaseLayout>
     <AuthLayout>{page}</AuthLayout>
   </BaseLayout>

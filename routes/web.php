@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ResendEmailVerificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,6 +38,14 @@ Route::middleware('guest')
                     ->controller(EmailVerificationController::class)
                     ->group(function () {
                         Route::get('/{email}/{token}', 'get')->name('get');
+                    });
+
+                Route::prefix('resend-email-verification')
+                    ->name('resend-email-verification.')
+                    ->controller(ResendEmailVerificationController::class)
+                    ->group(function () {
+                        Route::get('/', 'get')->name('get');
+                        Route::post('/', 'post')->name('post');
                     });
             });
     });
