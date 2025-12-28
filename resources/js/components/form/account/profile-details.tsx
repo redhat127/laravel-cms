@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
-const profileDetailsForm = z.object({
+const profileDetailsSchema = z.object({
   name: nameRule,
   username: usernameRule,
 });
@@ -21,7 +21,7 @@ const profileDetailsForm = z.object({
 export const ProfileDetailsForm = () => {
   const { name, username, username_changed_at } = useCurrentUser()!;
   const form = useForm({
-    resolver: zodResolver(profileDetailsForm),
+    resolver: zodResolver(profileDetailsSchema),
     defaultValues: {
       name,
       username,
