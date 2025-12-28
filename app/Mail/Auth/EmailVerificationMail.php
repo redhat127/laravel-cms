@@ -2,7 +2,6 @@
 
 namespace App\Mail\Auth;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
@@ -20,7 +19,8 @@ class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueue
      * Create a new message instance.
      */
     public function __construct(
-        private User $user,
+        public string $name,
+        private string $email,
         private string $token,
         public int $expires_in_minutes
     ) {
@@ -46,9 +46,9 @@ class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueue
         return new Content(
             markdown: 'mail.auth.email-verification',
             with: [
-                'name' => $this->user->name,
+                'name' => $this->name,
                 'link' => route('auth.email-verification.get', [
-                    'email' => $this->user->email,
+                    'email' => $this->email,
                     'token' => $this->token,
                 ]),
             ]

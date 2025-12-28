@@ -38,7 +38,8 @@ class ResendEmailVerificationController extends Controller
             );
 
             Mail::to($user)->send(new EmailVerificationMail(
-                user: $user,
+                name: $user->name,
+                email: $user->email,
                 token: $token,
                 expires_in_minutes: $expires_in_minutes
             ));
