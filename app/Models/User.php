@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
@@ -26,6 +28,7 @@ class User extends Authenticatable
             'username_changed_at' => 'datetime',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'password_changed_at' => 'datetime',
         ];
     }
 
@@ -50,5 +53,13 @@ class User extends Authenticatable
     public function userTokens()
     {
         return $this->hasMany(UserToken::class);
+    }
+
+    public function logoutOtherDevices()
+    {
+        DB::table('sessions')
+            ->where('user_id', Auth::id())
+            ->where('id', '!=', session()->getId())
+            ->delete();
     }
 }

@@ -73,5 +73,8 @@ Route::middleware('auth')
 
                 Route::get('/confirm-username-change/{token}', 'confirmUsernameChange')
                     ->name('confirmUsernameChange');
+
+                Route::patch('/change-password', 'changePassword')
+                    ->name('changePassword');
             });
     });

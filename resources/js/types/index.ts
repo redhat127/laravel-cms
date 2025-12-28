@@ -2,9 +2,10 @@ export type UsersTable = {
   id: string;
   name: string;
   username: string;
-  email: string;
   username_changed_at: string | null;
+  email: string;
   email_verified_at: string | null;
+  password_changed_at: string | null;
   created_at: string | null;
   updated_at: string | null;
   avatar: string | null;
@@ -14,7 +15,16 @@ export type SharedInertiaCurrentUserProp = {
   current_user: {
     data: Pick<
       UsersTable,
-      'id' | 'name' | 'username' | 'email' | 'username_changed_at' | 'email_verified_at' | 'created_at' | 'updated_at' | 'avatar'
+      | 'id'
+      | 'name'
+      | 'username'
+      | 'username_changed_at'
+      | 'email'
+      | 'email_verified_at'
+      | 'password_changed_at'
+      | 'created_at'
+      | 'updated_at'
+      | 'avatar'
     >;
   } | null;
 };

@@ -17,9 +17,15 @@ trait CustomRuleValidation
         return $rules;
     }
 
-    public function passwordRule($min = 1)
+    public function passwordRule($min = 1, $checkCurrentPassword = false)
     {
-        return ['bail', 'required', 'string', 'min:'.$min, 'max:50'];
+        $rules = ['bail', 'required', 'string', 'min:'.$min, 'max:50'];
+
+        if ($checkCurrentPassword) {
+            $rules[] = 'current_password';
+        }
+
+        return $rules;
     }
 
     public function remember_meRule()

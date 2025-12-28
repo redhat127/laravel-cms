@@ -1,3 +1,4 @@
+import { ChangePasswordForm } from '@/components/form/account/change-password-form';
 import { ProfileDetailsForm } from '@/components/form/account/profile-details';
 import { BaseLayout } from '@/components/layout/base-layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -28,6 +29,19 @@ export default function Account() {
           </CardHeader>
           <CardContent>
             <ProfileDetailsForm />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <h2 className="font-bold">Change Password</h2>
+            </CardTitle>
+            <CardDescription>
+              Update your password to keep your account secure. you'll need to enter your current password to confirm the change.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ChangePasswordForm />
           </CardContent>
         </Card>
       </div>

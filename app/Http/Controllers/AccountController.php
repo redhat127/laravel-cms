@@ -8,6 +8,7 @@ use App\Models\UserToken;
 use App\Models\UserTokenType;
 use App\Trait\CustomRuleValidation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 
 class AccountController extends Controller
@@ -121,5 +122,33 @@ class AccountController extends Controller
                 'type' => 'success',
                 'text' => 'Your username has changed.',
             ]);
+    }
+
+    public function changePassword()
+    {
+        $validated = request()->validate([
+            'current_password' => $this->passwordRule(
+                min: 10,
+                checkCurrentPassword: true
+            ),
+            'password' => $this->passwordRule(min: 10),
+        ]);
+
+        $user = Auth::user();
+
+        $user->update([
+            'password' => $validated['password'],
+            'password_changed_at' => now(),
+            'remember_token' => null,
+        ]);
+
+        $user->logoutOtherDevices();
+
+        Cookie::queue(Cookie::forget(Auth::getRecallerName()));
+
+        return back()->with('flash_message', [
+            'type' => 'success',
+            'text' => 'Your password has been changed.',
+        ]);
     }
 }
