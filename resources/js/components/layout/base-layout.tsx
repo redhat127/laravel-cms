@@ -36,7 +36,7 @@ export const BaseLayout = ({ children }: { children: ReactNode }) => {
             {currentUser ? (
               <UserDropdown />
             ) : (
-              <Button asChild>
+              <Button asChild size="sm">
                 <Link href={auth.login.get()}>Login</Link>
               </Button>
             )}
