@@ -46,4 +46,9 @@ class User extends Authenticatable
             }
         });
     }
+
+    public function userTokens()
+    {
+        return $this->hasMany(UserToken::class);
+    }
 }

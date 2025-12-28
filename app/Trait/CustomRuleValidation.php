@@ -55,4 +55,9 @@ trait CustomRuleValidation
 
         return $rules;
     }
+
+    public function tokenRule()
+    {
+        return ['bail', 'required', 'string', 'max:64'];
+    }
 }

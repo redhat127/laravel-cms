@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Trait\CustomRuleValidation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -26,7 +28,13 @@ class LoginController extends Controller
 
         $credentials = collect($validated)->except('remember_me')->all();
 
-        if (Auth::attempt($credentials, $validated['remember_me'])) {
+        $user = User::where('email', $credentials['email'])
+            ->where('email_verified_at', '!=', null)
+            ->first();
+
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            Auth::login($user, $validated['remember_me']);
+
             request()->session()->regenerate();
 
             inertia()->flash('flash_message', [
@@ -38,7 +46,7 @@ class LoginController extends Controller
         }
 
         throw ValidationException::withMessages([
-            'email' => 'email or password is wrong.',
+            'email' => 'Invalid email or password. check your credentials or verify your account.',
         ]);
     }
 }

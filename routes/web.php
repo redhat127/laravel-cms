@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
@@ -29,6 +30,13 @@ Route::middleware('guest')
                     ->group(function () {
                         Route::get('/', 'get')->name('get');
                         Route::post('/', 'post')->name('post');
+                    });
+
+                Route::prefix('email-verification')
+                    ->name('email-verification.')
+                    ->controller(EmailVerificationController::class)
+                    ->group(function () {
+                        Route::get('/{email}/{token}', 'get')->name('get');
                     });
             });
     });
