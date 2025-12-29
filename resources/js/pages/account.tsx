@@ -38,7 +38,7 @@ export default function Account() {
               <h2 className="font-bold">Change Password</h2>
             </CardTitle>
             <CardDescription>
-              Update your password to keep your account secure. you'll need to enter your current password to confirm the change.
+              Update your password to keep your account secure. you'll need to enter your current password to confirm the change
             </CardDescription>
           </CardHeader>
           <CardContent>
