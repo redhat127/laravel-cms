@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -59,7 +58,7 @@ class User extends Authenticatable
     public function logoutOtherDevices()
     {
         DB::table('sessions')
-            ->where('user_id', Auth::id())
+            ->where('user_id', $this->id)
             ->where('id', '!=', session()->getId())
             ->delete();
     }
