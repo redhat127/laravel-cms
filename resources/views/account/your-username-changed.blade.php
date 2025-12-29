@@ -1,5 +1,5 @@
 <x-mail::message>
-# Your Username Changed
+# {{ $subject }}
 
 Dear {{ $name }},
 
