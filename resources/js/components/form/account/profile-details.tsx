@@ -1,14 +1,12 @@
 import AccountController from '@/actions/App/Http/Controllers/AccountController';
 import { SubmitBtn } from '@/components/submit-btn';
 import { TextInput } from '@/components/text-input';
-import { Button } from '@/components/ui/button';
 import { FieldGroup } from '@/components/ui/field';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import { showServerValidationError } from '@/lib/utils';
-import { home } from '@/routes';
 import { nameRule, usernameRule } from '@/zod/inputs';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, router } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
@@ -63,12 +61,9 @@ export const ProfileDetailsForm = () => {
             </p>
           )}
         </div>
-        <div className="space-x-2">
-          <Button asChild variant="outline">
-            <Link href={home()}>Cancel</Link>
-          </Button>
-          <SubmitBtn disabled={isFormDisabled}>Update</SubmitBtn>
-        </div>
+        <SubmitBtn disabled={isFormDisabled} className="self-start">
+          Update
+        </SubmitBtn>
       </FieldGroup>
     </form>
   );
