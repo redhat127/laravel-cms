@@ -35,6 +35,17 @@ export default function Account() {
         <Card>
           <CardHeader>
             <CardTitle>
+              <h2 className="font-bold">Change Email</h2>
+            </CardTitle>
+            <CardDescription>Update the email address associated with your account</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ChangeEmailForm />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>
               <h2 className="font-bold">Change Password</h2>
             </CardTitle>
             <CardDescription>
@@ -43,17 +54,6 @@ export default function Account() {
           </CardHeader>
           <CardContent>
             <ChangePasswordForm />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>
-              <h2 className="font-bold">Change Email</h2>
-            </CardTitle>
-            <CardDescription>Update the email address associated with your account</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ChangeEmailForm />
           </CardContent>
         </Card>
       </div>
