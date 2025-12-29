@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react';
+import { useId, type ComponentProps } from 'react';
 import { Controller, type ControllerProps, type FieldPath, type FieldValues } from 'react-hook-form';
 import { Field, FieldError, FieldLabel } from './ui/field';
 import { Input } from './ui/input';
@@ -23,18 +23,20 @@ export const TextInput = <
   const isPassword = type === 'password';
   const InputComponent = isPassword ? PasswordInput : Input;
 
+  const id = useId();
+
   return (
     <Controller
       control={control}
       name={name}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid} className="gap-2">
-          <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+          <FieldLabel htmlFor={`${id}-${field.name}`}>{label}</FieldLabel>
 
           <InputComponent
             {...rest}
             {...field}
-            id={field.name}
+            id={`${id}-${field.name}`}
             autoComplete={autoComplete}
             aria-invalid={fieldState.invalid}
             // 2. Only pass 'type' if it's NOT a password field

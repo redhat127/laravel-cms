@@ -81,5 +81,8 @@ Route::middleware('auth')
                     ->name('changeEmail');
                 Route::get('/confirm-email-change/{token}', 'confirmEmailChange')
                     ->name('confirmEmailChange');
+
+                Route::delete('/', 'deleteMyAccount')
+                    ->name('deleteMyAccount');
             });
     });

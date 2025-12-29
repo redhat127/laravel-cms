@@ -1,5 +1,6 @@
 import { ChangeEmailForm } from '@/components/form/account/change-email-form';
 import { ChangePasswordForm } from '@/components/form/account/change-password-form';
+import { DeleteMyAccountForm } from '@/components/form/account/delete-my-account-form';
 import { ProfileDetailsForm } from '@/components/form/account/profile-details';
 import { BaseLayout } from '@/components/layout/base-layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -54,6 +55,19 @@ export default function Account() {
           </CardHeader>
           <CardContent>
             <ChangePasswordForm />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <h2 className="font-bold">Delete Account</h2>
+            </CardTitle>
+            <CardDescription className="text-red-600 dark:text-red-400">
+              Permanently delete your account and all associated data. You'll need to enter your current password to confirm this action
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <DeleteMyAccountForm />
           </CardContent>
         </Card>
       </div>

@@ -3,32 +3,16 @@ import { AuthLayout } from '@/components/layout/auth-layout';
 import { BaseLayout } from '@/components/layout/base-layout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useToastSearchParam } from '@/hooks/use-toast-search-query-params';
 import { pageTitle } from '@/lib/utils';
 import { home } from '@/routes';
 import auth from '@/routes/auth';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
-import { useEffect, type ReactNode } from 'react';
-import { toast } from 'sonner';
+import { type ReactNode } from 'react';
 
 export default function Login() {
-  useEffect(() => {
-    const searchParams = new URL(window.location.href).searchParams;
-
-    const emailChanged = searchParams.get('email-changed')?.toString() === 'true';
-
-    let emailChangedTimerId: ReturnType<typeof setTimeout>;
-
-    if (emailChanged) {
-      emailChangedTimerId = setTimeout(() => {
-        toast.success('Your email has been changed. check your inbox to verify your new email before logging in.');
-      }, 100);
-    }
-
-    return () => {
-      clearTimeout(emailChangedTimerId);
-    };
-  }, []);
+  useToastSearchParam('email-changed', { message: 'Your email has been changed. check your inbox to verify your new email before logging in.' });
   return (
     <>
       <Head>

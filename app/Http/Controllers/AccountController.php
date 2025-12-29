@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\Account\ConfirmYourEmailChangeMail;
 use App\Mail\Account\ConfirmYourUsernameChangeMail;
+use App\Mail\Account\YourAccountDeletedMail;
 use App\Mail\Account\YourEmailChangedMail;
 use App\Mail\Account\YourPasswordChangedMail;
 use App\Mail\Account\YourUsernameChangedMail;
@@ -287,6 +288,38 @@ class AccountController extends Controller
 
         return redirect()->route('auth.login.get', [
             'email-changed' => 'true',
+        ]);
+    }
+
+    public function deleteMyAccount()
+    {
+        request()->validate([
+            'current_password' => $this->passwordRule(
+                10,
+                checkCurrentPassword: true
+            ),
+        ]);
+
+        $user = Auth::user();
+
+        $user->update([
+            'remember_token' => null,
+        ]);
+
+        $user->delete(); // Delete first
+
+        Mail::to($user)
+            ->send(new YourAccountDeletedMail(
+                name: $user->name,
+                account_deleted_at: $user->deleted_at
+            ));
+
+        Cookie::queue(Cookie::forget(Auth::getRecallerName()));
+
+        $user->logoutAllDevices(); // Logout last (after DB operations)
+
+        return redirect()->route('home', [
+            'account-deleted' => 'true',
         ]);
     }
 }
