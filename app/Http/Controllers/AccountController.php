@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\Account\ConfirmYourEmailChangeMail;
 use App\Mail\Account\ConfirmYourUsernameChangeMail;
 use App\Mail\Account\YourEmailChangedMail;
+use App\Mail\Account\YourPasswordChangedMail;
 use App\Mail\Account\YourUsernameChangedMail;
 use App\Mail\Auth\EmailVerificationMail;
 use App\Models\UserToken;
@@ -149,6 +150,11 @@ class AccountController extends Controller
         $user->logoutOtherDevices();
 
         Cookie::queue(Cookie::forget(Auth::getRecallerName()));
+
+        Mail::to($user)->send(new YourPasswordChangedMail(
+            name: $user->name,
+            password_changed_at: $user->password_changed_at
+        ));
 
         return back()->with('flash_message', [
             'type' => 'success',
