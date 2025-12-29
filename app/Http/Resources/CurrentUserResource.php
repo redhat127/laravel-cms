@@ -21,6 +21,7 @@ class CurrentUserResource extends JsonResource
             'username_changed_at',
             'email',
             'email_verified_at',
+            'email_changed_at',
             'password_changed_at',
             'created_at',
             'updated_at',

@@ -11,6 +11,7 @@ enum UserTokenType: string
 {
     case EMAIL_VERIFICATION = 'email-verification';
     case CHANGE_USERNAME = 'change-username';
+    case CHANGE_EMAIL = 'change-email';
 }
 
 class UserToken extends Model

@@ -8,9 +8,27 @@ import { home } from '@/routes';
 import auth from '@/routes/auth';
 import { Head, Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
-import { type ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
+import { toast } from 'sonner';
 
 export default function Login() {
+  useEffect(() => {
+    const searchParams = new URL(window.location.href).searchParams;
+
+    const emailChanged = searchParams.get('email-changed')?.toString() === 'true';
+
+    let emailChangedTimerId: ReturnType<typeof setTimeout>;
+
+    if (emailChanged) {
+      emailChangedTimerId = setTimeout(() => {
+        toast.success('Your email has been changed. check your inbox to verify your new email before logging in.');
+      }, 100);
+    }
+
+    return () => {
+      clearTimeout(emailChangedTimerId);
+    };
+  }, []);
   return (
     <>
       <Head>

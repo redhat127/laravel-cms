@@ -1,3 +1,4 @@
+import { ChangeEmailForm } from '@/components/form/account/change-email-form';
 import { ChangePasswordForm } from '@/components/form/account/change-password-form';
 import { ProfileDetailsForm } from '@/components/form/account/profile-details';
 import { BaseLayout } from '@/components/layout/base-layout';
@@ -42,6 +43,17 @@ export default function Account() {
           </CardHeader>
           <CardContent>
             <ChangePasswordForm />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <h2 className="font-bold">Change Email</h2>
+            </CardTitle>
+            <CardDescription>Update the email address associated with your account</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ChangeEmailForm />
           </CardContent>
         </Card>
       </div>

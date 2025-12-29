@@ -5,6 +5,7 @@ export type UsersTable = {
   username_changed_at: string | null;
   email: string;
   email_verified_at: string | null;
+  email_changed_at: string | null;
   password_changed_at: string | null;
   created_at: string | null;
   updated_at: string | null;
@@ -21,6 +22,7 @@ export type SharedInertiaCurrentUserProp = {
       | 'username_changed_at'
       | 'email'
       | 'email_verified_at'
+      | 'email_changed_at'
       | 'password_changed_at'
       | 'created_at'
       | 'updated_at'

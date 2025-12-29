@@ -6,12 +6,18 @@ use Illuminate\Validation\Rule;
 
 trait CustomRuleValidation
 {
-    public function emailRule($checkUniqueness = false)
+    public function emailRule($checkUniqueness = false, ?string $uniqueIgnoreId = null)
     {
         $rules = ['bail', 'required', 'string', 'email', 'max:50'];
 
         if ($checkUniqueness) {
-            $rules[] = Rule::unique('users', 'email');
+            $rule = Rule::unique('users', 'email');
+
+            if ($uniqueIgnoreId) {
+                $rule->ignore($uniqueIgnoreId);
+            }
+
+            $rules[] = $rule;
         }
 
         return $rules;

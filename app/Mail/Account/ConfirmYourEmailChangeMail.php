@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\Auth;
+namespace App\Mail\Account;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,7 +11,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueueAfterCommit
+class ConfirmYourEmailChangeMail extends Mailable implements ShouldQueue, ShouldQueueAfterCommit
 {
     use Queueable, SerializesModels;
 
@@ -20,10 +20,11 @@ class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueue
      */
     public function __construct(
         public string $name,
-        private string $email,
         private string $token,
         public int $expires_in_minutes,
-        public bool $isEmailChange = false
+        public string $old_email,
+        public string $new_email,
+        public $subject = 'Confirm Your Email Change'
     ) {
         //
     }
@@ -35,7 +36,7 @@ class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueue
     {
         return new Envelope(
             from: new Address(config('mail.from.no-reply-address'), config('app.name')),
-            subject: 'Email Verification',
+            subject: $this->subject,
         );
     }
 
@@ -45,11 +46,9 @@ class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.auth.email-verification',
+            markdown: 'account/confirm-your-email-change',
             with: [
-                'name' => $this->name,
-                'link' => route('auth.email-verification.get', [
-                    'email' => $this->email,
+                'link' => route('account.confirmEmailChange', [
                     'token' => $this->token,
                 ]),
             ]

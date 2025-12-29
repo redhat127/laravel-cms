@@ -76,5 +76,10 @@ Route::middleware('auth')
 
                 Route::patch('/change-password', 'changePassword')
                     ->name('changePassword');
+
+                Route::patch('/change-email', 'changeEmail')
+                    ->name('changeEmail');
+                Route::get('/confirm-email-change/{token}', 'confirmEmailChange')
+                    ->name('confirmEmailChange');
             });
     });

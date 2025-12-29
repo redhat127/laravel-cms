@@ -27,6 +27,7 @@ class User extends Authenticatable
         return [
             'username_changed_at' => 'datetime',
             'email_verified_at' => 'datetime',
+            'email_changed_at' => 'datetime',
             'password' => 'hashed',
             'password_changed_at' => 'datetime',
         ];
@@ -60,6 +61,13 @@ class User extends Authenticatable
         DB::table('sessions')
             ->where('user_id', Auth::id())
             ->where('id', '!=', session()->getId())
+            ->delete();
+    }
+
+    public function logoutAllDevices()
+    {
+        DB::table('sessions')
+            ->where('user_id', $this->id)
             ->delete();
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Mail\Auth;
+namespace App\Mail\Account;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
@@ -10,8 +11,9 @@ use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 
-class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueueAfterCommit
+class YourEmailChangedMail extends Mailable implements ShouldQueue, ShouldQueueAfterCommit
 {
     use Queueable, SerializesModels;
 
@@ -20,10 +22,10 @@ class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueue
      */
     public function __construct(
         public string $name,
-        private string $email,
-        private string $token,
-        public int $expires_in_minutes,
-        public bool $isEmailChange = false
+        public string $old_email,
+        public string $new_email,
+        private CarbonImmutable|Carbon $email_changed_at,
+        public $subject = 'Your Email Changed'
     ) {
         //
     }
@@ -35,7 +37,7 @@ class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueue
     {
         return new Envelope(
             from: new Address(config('mail.from.no-reply-address'), config('app.name')),
-            subject: 'Email Verification',
+            subject: $this->subject,
         );
     }
 
@@ -45,13 +47,10 @@ class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.auth.email-verification',
+            markdown: 'account/your-email-changed',
             with: [
-                'name' => $this->name,
-                'link' => route('auth.email-verification.get', [
-                    'email' => $this->email,
-                    'token' => $this->token,
-                ]),
+                'email_changed_at_utc' => $this->email_changed_at->copy()->setTimezone('UTC')->format('F j, Y \a\t g:i A'),
+                'email_changed_at_tehran' => $this->email_changed_at->copy()->setTimezone('Asia/Tehran')->format('F j, Y \a\t g:i A'),
             ]
         );
     }
