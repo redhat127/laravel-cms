@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Account\ConfirmYourEmailChangeMail;
-use App\Mail\Account\ConfirmYourUsernameChange;
+use App\Mail\Account\ConfirmYourUsernameChangeMail;
 use App\Mail\Account\YourEmailChangedMail;
 use App\Mail\Account\YourUsernameChangedMail;
 use App\Mail\Auth\EmailVerificationMail;
@@ -47,7 +47,7 @@ class AccountController extends Controller
                 payload: ['new_username' => $validated['username']]
             );
 
-            Mail::to($user)->send(new ConfirmYourUsernameChange(
+            Mail::to($user)->send(new ConfirmYourUsernameChangeMail(
                 name: $user->name,
                 token: $token,
                 expires_in_minutes: $expires_in_minutes,

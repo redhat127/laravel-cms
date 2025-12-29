@@ -11,7 +11,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class ConfirmYourUsernameChange extends Mailable implements ShouldQueue, ShouldQueueAfterCommit
+class ConfirmYourUsernameChangeMail extends Mailable implements ShouldQueue, ShouldQueueAfterCommit
 {
     use Queueable, SerializesModels;
 
