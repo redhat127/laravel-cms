@@ -1,5 +1,5 @@
 <x-mail::message>
-# Email Verification
+# {{ $subject }}
 
 Dear {{ $name }},
 

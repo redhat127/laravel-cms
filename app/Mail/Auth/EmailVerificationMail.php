@@ -23,7 +23,8 @@ class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueue
         private string $email,
         private string $token,
         public int $expires_in_minutes,
-        public bool $isEmailChange = false
+        public bool $isEmailChange = false,
+        public $subject = 'Email Verification'
     ) {
         //
     }
@@ -35,7 +36,7 @@ class EmailVerificationMail extends Mailable implements ShouldQueue, ShouldQueue
     {
         return new Envelope(
             from: new Address(config('mail.from.no-reply-address'), config('app.name')),
-            subject: 'Email Verification',
+            subject: $this->subject,
         );
     }
 

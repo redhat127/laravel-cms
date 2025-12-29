@@ -36,7 +36,7 @@ class EmailVerificationController extends Controller
             abort(404);
         }
 
-        $userToken = $user->userTokens
+        $userToken = $user->userTokens()
             ->where('type', UserTokenType::EMAIL_VERIFICATION)
             ->first();
 
