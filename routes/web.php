@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResendEmailVerificationController;
@@ -45,6 +47,22 @@ Route::middleware('guest')
                     ->controller(ResendEmailVerificationController::class)
                     ->group(function () {
                         Route::get('/', 'get')->name('get');
+                        Route::post('/', 'post')->name('post');
+                    });
+
+                Route::prefix('reset-password')
+                    ->name('reset-password.')
+                    ->controller(ResetPasswordController::class)
+                    ->group(function () {
+                        Route::get('/', 'get')->name('get');
+                        Route::post('/', 'post')->name('post');
+                    });
+
+                Route::prefix('change-password')
+                    ->name('change-password.')
+                    ->controller(ChangePasswordController::class)
+                    ->group(function () {
+                        Route::get('/{email}/{token}', 'get')->name('get');
                         Route::post('/', 'post')->name('post');
                     });
             });

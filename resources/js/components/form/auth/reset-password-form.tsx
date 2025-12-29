@@ -1,30 +1,24 @@
-import LoginController from '@/actions/App/Http/Controllers/Auth/LoginController';
+import ResetPasswordController from '@/actions/App/Http/Controllers/Auth/ResetPasswordController';
 import { showServerValidationError } from '@/lib/utils';
-import auth from '@/routes/auth';
-import { emailRule, passwordRule, remember_meRule } from '@/zod/inputs';
+import { emailRule } from '@/zod/inputs';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, router } from '@inertiajs/react';
+import { router } from '@inertiajs/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
-import { CheckboxInput } from '../../checkbox-input';
 import { SubmitBtn } from '../../submit-btn';
 import { TextInput } from '../../text-input';
 import { FieldGroup } from '../../ui/field';
 
-const loginSchema = z.object({
+const resetPasswordSchema = z.object({
   email: emailRule,
-  password: passwordRule(),
-  remember_me: remember_meRule,
 });
 
-export const LoginForm = () => {
+export const ResetPasswordForm = () => {
   const form = useForm({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
       email: '',
-      password: '',
-      remember_me: false,
     },
   });
   const {
@@ -37,7 +31,7 @@ export const LoginForm = () => {
   return (
     <form
       onSubmit={handleSubmit((data) => {
-        router.post(LoginController.post(), data, {
+        router.post(ResetPasswordController.post(), data, {
           onBefore() {
             setIsPending(true);
           },
@@ -52,14 +46,7 @@ export const LoginForm = () => {
     >
       <FieldGroup className="gap-4">
         <TextInput label="Email" control={control} name="email" inputProps={{ type: 'email' }} />
-        <div className="space-y-1">
-          <TextInput label="Password" control={control} name="password" inputProps={{ type: 'password' }} />
-          <Link href={auth.resetPassword.get()} className="text-sm font-medium text-primary underline underline-offset-4">
-            Reset password?
-          </Link>
-        </div>
-        <CheckboxInput label="Remember me?" control={control} name="remember_me" />
-        <SubmitBtn disabled={isFormDisabled}>Login</SubmitBtn>
+        <SubmitBtn disabled={isFormDisabled}>Reset Password</SubmitBtn>
       </FieldGroup>
     </form>
   );
