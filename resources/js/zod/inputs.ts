@@ -40,3 +40,17 @@ export const usernameRule = z
   .refine((val) => !['admin', 'root', 'system', 'support', 'api', 'www', 'mail', 'help'].includes(val), {
     message: 'this username is reserved and cannot be used.',
   });
+
+const MAX_USER_AVATAR_SIZE = 2 * 1024 * 1024; // 2mb
+export const VALID_USER_AVATAR_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif'];
+export const userAvatarRule = z
+  .instanceof(File, { message: 'please select an image file.' })
+  .refine((file) => file.size > 0, {
+    message: 'the selected file is empty.',
+  })
+  .refine((file) => file.size <= MAX_USER_AVATAR_SIZE, {
+    message: 'avatar must be smaller than 2 mb.',
+  })
+  .refine((file) => VALID_USER_AVATAR_MIME_TYPES.includes(file.type), {
+    message: 'allowed formats: jpg, png, gif, webp and avif.',
+  });

@@ -29,14 +29,27 @@ export const TextInput = <
     <Controller
       control={control}
       name={name}
-      render={({ field, fieldState }) => (
+      render={({ field: { name, onBlur, onChange, ref, value, disabled }, fieldState }) => (
         <Field data-invalid={fieldState.invalid} className="gap-2">
-          <FieldLabel htmlFor={`${id}-${field.name}`}>{label}</FieldLabel>
+          <FieldLabel htmlFor={`${id}-${name}`}>{label}</FieldLabel>
 
           <InputComponent
             {...rest}
-            {...field}
-            id={`${id}-${field.name}`}
+            name={name}
+            onBlur={onBlur}
+            onChange={(e) => {
+              if (inputProps.type !== 'file') {
+                onChange(e);
+                return;
+              }
+              const file = e.target.files?.[0];
+              onChange(file);
+              inputProps.onChange?.(e);
+            }}
+            ref={ref}
+            value={inputProps.type !== 'file' ? value : undefined}
+            disabled={disabled}
+            id={`${id}-${name}`}
             autoComplete={autoComplete}
             aria-invalid={fieldState.invalid}
             // 2. Only pass 'type' if it's NOT a password field

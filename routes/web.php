@@ -89,6 +89,12 @@ Route::middleware('auth')
                 Route::patch('/profile-details', 'profileDetails')
                     ->name('profileDetails');
 
+                Route::post('/update-avatar', 'updateAvatar')
+                    ->name('updateAvatar');
+
+                Route::delete('/delete-avatar', 'deleteAvatar')
+                    ->name('deleteAvatar');
+
                 Route::get('/confirm-username-change/{token}', 'confirmUsernameChange')
                     ->name('confirmUsernameChange');
 

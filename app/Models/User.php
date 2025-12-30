@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class User extends Authenticatable
@@ -80,5 +81,18 @@ class User extends Authenticatable
         DB::table('sessions')
             ->where('user_id', $this->id)
             ->delete();
+    }
+
+    public function getAvatarAttribute($value): ?string
+    {
+        if (! $value) {
+            return null;
+        }
+
+        if (Str::startsWith($value, ['http://', 'https://'])) {
+            return $value;
+        }
+
+        return Storage::url($value);
     }
 }

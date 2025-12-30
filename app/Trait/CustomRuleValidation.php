@@ -3,6 +3,7 @@
 namespace App\Trait;
 
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 trait CustomRuleValidation
 {
@@ -71,5 +72,20 @@ trait CustomRuleValidation
     public function tokenRule()
     {
         return ['bail', 'required', 'string', 'max:64'];
+    }
+
+    public function userAvatarRule($max = '2mb')
+    {
+        return [
+            'bail',
+            'required',
+            File::types([
+                'image/jpeg',
+                'image/png',
+                'image/gif',
+                'image/webp',
+                'image/avif',
+            ])->min('1kb')->max($max),
+        ];
     }
 }

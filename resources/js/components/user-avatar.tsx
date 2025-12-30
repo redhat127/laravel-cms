@@ -1,28 +1,31 @@
 import { useCurrentUser } from '@/hooks/use-current-user';
-import { getContrastColor, hashCode } from '@/lib/utils';
+import { cn, getContrastColor, hashCode } from '@/lib/utils';
 
-export const UserAvatar = () => {
+export const UserAvatar = ({ width = 8, height = 8, className = '' }: { width?: number; height?: number; className?: string }) => {
   const { name, avatar } = useCurrentUser()!;
 
   if (avatar) {
     return (
-      <div className="h-8 w-8 min-w-8 overflow-hidden rounded-full">
+      <div
+        className="overflow-hidden rounded-full"
+        style={{ width: `${width * 0.25}rem`, height: `${height * 0.25}rem`, minWidth: `${width * 0.25}rem` }}
+      >
         <img src={avatar} alt={`${name} avatar`} className="h-full w-full object-cover" />
       </div>
     );
   }
 
-  // Generate consistent color from name
   const hue = hashCode(name) % 360;
   const bgColor = `hsl(${hue}, 70%, 50%)`;
-
-  // Determine text color based on background luminance
   const textColor = getContrastColor(hue, 70, 50);
 
   return (
-    <div className="h-8 w-8 min-w-8 overflow-hidden rounded-full">
+    <div
+      className="overflow-hidden rounded-full"
+      style={{ width: `${width * 0.25}rem`, height: `${height * 0.25}rem`, minWidth: `${width * 0.25}rem` }}
+    >
       <div
-        className="flex h-full w-full items-center justify-center capitalize"
+        className={cn('flex h-full w-full items-center justify-center capitalize', className)}
         style={{ backgroundColor: bgColor, color: textColor }}
         aria-label={`${name} avatar`}
       >

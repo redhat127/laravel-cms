@@ -2,6 +2,7 @@ import { ChangeEmailForm } from '@/components/form/account/change-email-form';
 import { ChangePasswordForm } from '@/components/form/account/change-password-form';
 import { DeleteMyAccountForm } from '@/components/form/account/delete-my-account-form';
 import { ProfileDetailsForm } from '@/components/form/account/profile-details';
+import { UpdateAvatarForm } from '@/components/form/account/update-avatar-form';
 import { BaseLayout } from '@/components/layout/base-layout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { pageTitle } from '@/lib/utils';
@@ -31,6 +32,17 @@ export default function Account() {
           </CardHeader>
           <CardContent>
             <ProfileDetailsForm />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              <h1 className="font-bold">Update Avatar</h1>
+            </CardTitle>
+            <CardDescription>Update your avatar — this image will appear in your settings, comments, and activity</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <UpdateAvatarForm />
           </CardContent>
         </Card>
         <Card>

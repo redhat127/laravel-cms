@@ -16,6 +16,9 @@ use Illuminate\Mail\Mailables\Address;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Laravel\Facades\Image;
 
 class AccountController extends Controller
 {
@@ -320,6 +323,72 @@ class AccountController extends Controller
 
         return redirect()->route('home', [
             'account-deleted' => 'true',
+        ]);
+    }
+
+    public function updateAvatar()
+    {
+        request()->validate([
+            'avatar' => $this->userAvatarRule(),
+        ]);
+
+        $file = request()->file('avatar');
+
+        try {
+            $image = Image::read($file)
+                ->cover(300, 300)
+                ->toWebp(80);
+        } catch (\Exception $e) {
+            logger()->error('Avatar processing failed', [
+                'user_id' => Auth::id(),
+                'error' => $e->getMessage(),
+            ]);
+
+            return back()->with('flash_message', [
+                'type' => 'error',
+                'text' => 'Failed to process image. try a different file.',
+            ]);
+        }
+
+        $user = Auth::user();
+
+        $path = 'avatars/'.$user->id.'_'.time().'_'.Str::random(8).'.webp';
+
+        Storage::put($path, $image->toString());
+
+        $prevAvatar = $user->getRawOriginal('avatar');
+
+        $user->update(['avatar' => $path]);
+
+        if ($prevAvatar && ! Str::startsWith($prevAvatar, ['http://', 'https://'])) {
+            if (Storage::exists($prevAvatar)) {
+                Storage::delete($prevAvatar);
+            }
+        }
+
+        return back()->with('flash_message', [
+            'type' => 'success',
+            'text' => 'Your avatar has been updated.',
+        ]);
+    }
+
+    public function deleteAvatar()
+    {
+        $user = Auth::user();
+
+        $avatarPath = $user->getRawOriginal('avatar');
+
+        if (! Str::startsWith($avatarPath, ['http://', 'https://'])) {
+            if (Storage::exists($avatarPath)) {
+                Storage::delete($avatarPath);
+            }
+        }
+
+        $user->update(['avatar' => null]);
+
+        return back()->with('flash_message', [
+            'type' => 'success',
+            'text' => 'Your avatar has been deleted.',
         ]);
     }
 }
